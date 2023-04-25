@@ -29,10 +29,10 @@
                       <input v-model="name" type="text" required placeholder="Name" class="text-black pl-1 p-0 outline-none">
                     </li>
                     <li>
-                      <input v-model="subject" type="text" required placeholder="Discription" class="text-black pl-1 p-0 outline-none">
+                      <input v-model="description" type="text" required placeholder="Description" class="text-black pl-1 p-0 outline-none">
                     </li>
                     <li>
-                      <button :disabled="(!name,!email,!subject)" class="bg-sky-700 p-1 px-3 text-center mx-auto flex justify-center" @click="submit(user.id,name,email,subject)">
+                      <button :disabled="(!email,!name,!description)" class="bg-sky-700 p-1 px-3 text-center mx-auto flex justify-center" @click="submit(user.id,email,name,description)">
                         Change
                       </button>
                     </li>
@@ -58,17 +58,19 @@ export default {
       users: [],
       name: '',
       email: '',
-      subject: ''
+      description: ''
     }
   },
   async mounted () {
-    const response = await this.$axios.get('/api/posts')
+    await this.$axios.$get('/api/postman/csrf')
+    const response = await this.$axios.get('/api/contacts')
     this.users = response.data
   },
   methods: {
     async deleteData (id) {
+      await this.$axios.$get('/api/postman/csrf')
       try {
-        const response = await this.$axios.delete(`/api/contact/all/${id}/delete`)
+        const response = await this.$axios.delete(`/api/contacts/${id}/delete`)
         this.users.shift(response)
         if (response.message !== '') {
           this.$router.push('/')
@@ -76,8 +78,9 @@ export default {
       } catch (error) {
       }
     },
-    async submit (id, name, email, subject) {
-      const update = await this.$axios.put(`/api/contact/all/${id}/update`, { id, name, email, subject })
+    async submit (id, email, name, description) {
+      await this.$axios.$get('/api/postman/csrf')
+      const update = await this.$axios.put(`/api/contacts/${id}/update`, { id, email, name, description })
       this.users = update
       if (update !== '') {
         this.$router.push('/home')

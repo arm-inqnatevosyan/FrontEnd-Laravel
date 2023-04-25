@@ -2,7 +2,7 @@
   <div>
     <div class="w-80 h-auto text-sm bg-sky-700 shadow-lg py-4 shadow-cyan-500/50 text-white text-center font-bold mx-auto mt-2">
       <h1 class="font-bold text-xl">
-        Name :{{ name }}
+        Name : {{ name }}
       </h1>
       <h1>Email :{{ email }}</h1>
       <div class="py-3">
@@ -13,7 +13,7 @@
       </div>
       <div v-for="comment in comments" :key="comment.id" class="mt-3">
         <h1 class="text-black">
-          Comment :{{ comment.title }}
+          {{ comment.author }} :{{ comment.title }}
         </h1>
       </div>
     </div>
@@ -39,7 +39,8 @@ export default {
 
   methods: {
     async addComment (id, title) {
-      return await this.$axios.post('/api/posts/comments', { title, contact_id: id })
+      await this.$axios.$get('/api/postman/csrf')
+      return await this.$axios.post('/api/contacts/comments', { title, contact_id: id })
     }
   }
 }

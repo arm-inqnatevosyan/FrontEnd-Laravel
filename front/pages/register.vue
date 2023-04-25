@@ -93,10 +93,9 @@ export default {
   },
   methods: {
     async submit (name, email, password) {
-      const post = await this.$axios.$post('/api/register', { name, email, password })
-      if (post.status === 'success') {
-        this.$router.push('/')
-      }
+      await this.$axios.$get('/api/postman/csrf')
+      await this.$axios.$post('/api/register', { name, email, password })
+      this.$router.push('/')
     }
   }
 }

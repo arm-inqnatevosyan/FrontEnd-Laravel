@@ -77,13 +77,10 @@ export default {
   },
   methods: {
     async login (email, password) {
-      const post = await this.$axios.$post('/api/login', { email, password })
-      const myPath = window.location.pathname
-      if (post.status === 'success') {
-        alert(post.authorisation.token)
-        this.$cookiz.set('jwt', post.authorisation.token, {
-          path: myPath,
-          Domain: process.env.baseUrl,
+      await this.$axios.$get('/api/postman/csrf')
+      const res = await this.$axios.$post('/api/login', { email, password })
+      if (res.status === true) {
+        this.$cookiz.set('token', res.token, {
           maxAge: 60 * 60 * 24 * 7
         })
         this.$router.push('/home')

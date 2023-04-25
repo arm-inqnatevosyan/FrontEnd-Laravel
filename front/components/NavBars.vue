@@ -40,6 +40,21 @@
               My Jobs
             </NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/opinion">
+              Opinon
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/category">
+              Good Category
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/badcategory">
+              Bad Category
+            </NuxtLink>
+          </li>
         </ul>
       </div>
 
@@ -93,8 +108,18 @@
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/register" class="text-sm rounded-3xl px-10 py-2 text-white bg-mycolor mt-5">
-              Sign In
+            <NuxtLink to="/opinion" class="my-4 inline-block" @click="isOpen = false">
+              Opinon
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/category" class="my-4 inline-block" @click="isOpen = false">
+              Good Category
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/badcategory" class="my-4 inline-block" @click="isOpen = false">
+              Bad Category
             </NuxtLink>
           </li>
         </ul>

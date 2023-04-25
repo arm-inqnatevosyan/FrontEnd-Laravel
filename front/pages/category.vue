@@ -1,11 +1,14 @@
 <template>
   <div>
     <NavBars />
+    <h1 class="mt-7 text-3xl font-bold text-sky-600 text-center">
+      Good Category Posts
+    </h1>
     <div class="mt-7 w-full sm:grid-cols-1 md:grid-cols-3 lg:grid grid-cols-3">
       <SeePost
-        v-for="user in users"
+        v-for="(user, index) in users.contacts"
         :id="user.id"
-        :key="user.id"
+        :key="index"
         :email="user.email"
         :name="user.name"
         :subject="user.subject"
@@ -29,17 +32,10 @@ export default {
   },
   async mounted () {
     await this.$axios.get('/api/postman/csrf')
-    const response = await this.$axios.get('/api/contacts')
-    this.users = response.data
+    const response = await this.$axios.get('/api/categorys')
+    this.users = response.data[0]
   },
   methods: {
-    async openUserProfile (user) {
-      await this.$axios.get('/api/postman/csrf')
-      await this.$router.push('/api/contacts' + '/' + `${user}`)
-      if (user) {
-        user = !user
-      }
-    },
     async addComment (id, title) {
       await this.$axios.get('/api/postman/csrf')
       return await this.$axios.post('/api/contacts/comments', { contact_id: id, title })

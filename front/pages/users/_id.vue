@@ -33,14 +33,16 @@ export default {
     }
   },
   async mounted () {
-    const response = await this.$axios.get(`/api/contact/all/${this.$route.params.id}`)
+    await this.$axios.$get('/api/postman/csrf')
+    const response = await this.$axios.get(`/api/contacts/${this.$route.params.id}`)
     const user = response.data
     this.users = user
     return user
   },
   methods: {
     async openUserProfile () {
-      await this.$router.push(`/api/contact/all/${this.$route.params.id}`)
+      await this.$axios.$get('/api/postman/csrf')
+      await this.$router.push(`/api/contacts/${this.$route.params.id}`)
     }
   }
 }

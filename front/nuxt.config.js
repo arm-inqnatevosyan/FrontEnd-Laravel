@@ -49,14 +49,17 @@ export default {
     ['cookie-universal-nuxt', { alias: 'cookiz' }]
   ],
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+    baseUrl: process.env.BASE_URL || 'http://localhost:8000'
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8000/'
+    baseURL: 'http://localhost:8000/',
+    proxy: true
   },
-  proxy: 'http://localhost:8000/',
+  proxy: {
+    '/api': 'http://localhost:8000/'
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
